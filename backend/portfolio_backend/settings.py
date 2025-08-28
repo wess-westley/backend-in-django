@@ -92,7 +92,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'backend', 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'picha', 'media')
 PROFILE_CV_URL = MEDIA_URL + 'image/gitau.pdf'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 PROFILE_PICTURE_URL = MEDIA_URL + 'image/westley.jpg'
