@@ -14,7 +14,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key-for-dev')
 
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,6 +38,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'portfolio_backend.urls'
@@ -93,7 +94,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'backend', 'media')
 PROFILE_CV_URL = MEDIA_URL + 'image/gitau.pdf'
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 PROFILE_PICTURE_URL = MEDIA_URL + 'image/westley.jpg'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
