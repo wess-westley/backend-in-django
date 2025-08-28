@@ -13,7 +13,7 @@ from .serializers import (
 from .utils import get_github_projects
 from django.http import JsonResponse
 from django.db import transaction
-
+import os
 @api_view(['POST'])
 def sync_github_projects(request):
     """
@@ -47,16 +47,33 @@ def sync_github_projects(request):
 def api_root(request):
     return JsonResponse({"message": "API is working!"})
 
-# --- Profile ---
 @api_view(['GET'])
 def profile_picture(request):
-    picture_url = getattr(settings, 'PROFILE_PICTURE_URL', 'https://example.com/path/to/profile.jpg')
-    return Response({'imageUrl': picture_url})
-
+    picture_url = getattr(
+        settings,
+        'PROFILE_PICTURE_URL',
+        'https://example.com/path/to/westley.jpg'
+    )
+    return Response({'imageUrl': request.build_absolute_uri(picture_url)})
 @api_view(['GET'])
 def profile_cv(request):
-    cv_url = getattr(settings, 'PROFILE_CV_URL', 'https://example.com/path/to/cv.pdf')
-    return Response({'cvUrl': cv_url})
+    cv_url = getattr(settings, 'PROFILE_CV_URL', None)
+
+    if cv_url:
+        cv_path = os.path.join(settings.MEDIA_ROOT, 'image', 'gitau.pdf')
+        if os.path.exists(cv_path):
+            return Response({'cvUrl': request.build_absolute_uri(cv_url)})
+        else:
+            return Response(
+                {'error': 'CV not available at the moment.'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+    return Response(
+        {'error': 'CV not available at the moment.'},
+        status=status.HTTP_404_NOT_FOUND
+    )
+
 
 # --- Projects ---
 class ProjectListCreateView(generics.ListCreateAPIView):
