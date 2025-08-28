@@ -112,7 +112,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://172.18.80.1:3000",
 ]
-CONTACT_EMAIL = config('CONTACT_EMAIL')
+CONTACT_EMAIL = config('CONTACT_EMAIL' ,default='westleykanyora9@gmail.com')
 
 # Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
